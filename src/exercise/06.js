@@ -9,6 +9,20 @@ function UsernameForm({onSubmitUsername}) {
   // `event.preventDefault()` to prevent the default behavior of form submit
   // events (which refreshes the page).
   // 📜 https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault
+
+  const [username, setUsername] = React.useState('')
+  const inputRef = React.useRef()
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    // const formValue = event.target.elements.username.value
+    onSubmitUsername(username)
+  }
+
+  function handleChange(event) {
+    const {value} = event.target
+    setUsername(value.toLowerCase())
+  }
   //
   // 🐨 get the value from the username input (using whichever method
   // you prefer from the options mentioned in the instructions)
@@ -19,11 +33,18 @@ function UsernameForm({onSubmitUsername}) {
 
   // 🐨 make sure to associate the label to the input.
   // to do so, set the value of 'htmlFor' prop of the label to the id of input
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div>
-        <label>Username:</label>
-        <input type="text" />
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          ref={inputRef}
+          onChange={handleChange}
+          value={username}
+        />
       </div>
       <button type="submit">Submit</button>
     </form>
